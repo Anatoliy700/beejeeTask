@@ -59,12 +59,15 @@ class TaskController extends BaseController
 
     public function updateAction(Request $request)
     {
+        if (!$this->isLogged()){
+            return $this->redirect('index');
+        }
 
         $id = $request->get('id');
 
         $model = (new Tasks())->getById($id);
 
-        if ($this->isLogged() && $request->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
             try {
                 $model->setDescription($request->get('description'));
 
@@ -80,12 +83,15 @@ class TaskController extends BaseController
 
     public function updateStatusAction(Request $request)
     {
+        if (!$this->isLogged()){
+            return $this->redirect('index');
+        }
 
         $id = $request->get('id');
 
         $model = (new Tasks())->getById($id);
 
-        if ($this->isLogged() && $request->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
             try {
                 $model->setStatus(Task::STATUS_DONE);
 
