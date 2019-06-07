@@ -1,7 +1,7 @@
 <?php
 
 use app\controllers\AuthController;
-use app\Controllers\TaskController;
+use app\controllers\TaskController;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
