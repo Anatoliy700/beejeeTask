@@ -16,8 +16,8 @@ use app\models\entity\Task;
                    name="username" <?= $create ? 'required' : 'readonly' ?>>
         </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">Email</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1"
+            <label for="exampleFormControlInput2">Email</label>
+            <input type="email" class="form-control" id="exampleFormControlInput2"
                    value="<?= $model ? $model->getEmail() : '' ?>"
                    name="email" <?= $create ? 'required' : 'readonly' ?>
                    placeholder="name@example.com">
