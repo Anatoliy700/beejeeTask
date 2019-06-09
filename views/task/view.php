@@ -5,9 +5,14 @@ use Framework\Registry;
 
 /* @var $model Task */
 
-$pathUpdate = Registry::getRoute('update');
-$pathUpdateStatus = Registry::getRoute('updateStatus');
 $security = Registry::getService('user.security');
+
+$getUrl = function ($view, $params) {
+    if ($view === '_self') {
+        $view = Registry::getRequest()->get('_route');
+    }
+    return Registry::getRoute($view, $params);
+};
 
 ?>
 
@@ -18,11 +23,11 @@ $security = Registry::getService('user.security');
 <?php if ($security->isLogged()): ?>
     <div class="row">
         <div class="btn-toolbar">
-            <a class="btn btn-warning" href="<?php echo "{$pathUpdate}?id={$model->getId()}" ?>">Update</a>
+            <a class="btn btn-warning" href="<?php echo $getUrl('update', ['id' => $model->getId()]) ?>">Update</a>
             <form>
                 <input type="submit"
                        formmethod="post"
-                       formaction="<?php echo "{$pathUpdateStatus}?id={$model->getId()}" ?>"
+                       formaction="<?php echo $getUrl('updateStatus', ['id' => $model->getId()]) ?>"
                        class="btn btn-danger"
                        value="Done"
                     <?= $model->getStatus() ? 'disabled' : '' ?>

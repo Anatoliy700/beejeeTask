@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Pagination
 {
+    private const OFFSET = 'offset';
+    private const PAGE = 'page';
+
     private $request;
 
     private $repository;
@@ -21,24 +24,17 @@ class Pagination
         $this->request = $request;
         $this->repository = $repository;
         $this->limitItem = Registry::getDataConfig('limitTasks');
-
-        $this->getOthersQueryParams();
     }
 
     public function getLinks()
     {
         $links = [];
 
-        $path = $this->request->getPathInfo();
-
         for ($i = 1, $offset = 0; $i <= $this->getPageCount(); $i++, $offset += $this->limitItem) {
-            if ($i === 1) {
-                $link = $path;
-                $link .= $this->getOthersQueryParams() ? '?' . $this->getOthersQueryParams() : '';
-            } else {
-                $link = "$path?offset={$offset}&page={$i}";
-                $link .= $this->getOthersQueryParams() ? '&' . $this->getOthersQueryParams() : '';
-            }
+            $link = $this->getUrl([
+                static::OFFSET => $offset,
+                static::PAGE => $i
+            ]);
             $class = 'class="page-item';
 
             $page = $this->getPage();
@@ -60,11 +56,11 @@ class Pagination
         return ceil($this->repository->getAmount() / $this->limitItem);
     }
 
-    protected function getOthersQueryParams()
+    protected function getUrl($params = [])
     {
-        $pattern = "/offset=\d+&page=\d+/";
-        $queryParams = preg_replace($pattern, '', $this->request->getQueryString());
-        return trim($queryParams, '&');
+        $queryParams = array_merge($this->request->query->all(), $params);
+
+        return Registry::getRoute($this->request->get('_route'), $queryParams);
     }
 
     protected function getPage()
@@ -74,13 +70,16 @@ class Pagination
 
     public function render()
     {
+        if ($this->getPageCount() < 2) {
+            return '';
+        }
         $str = '<nav aria-label="..."><ul class="pagination pagination-sm">';
 
         foreach ($this->getLinks() as $link) {
             $str .= $link;
         }
 
-        $str .= ' </ul></nav>';
+        $str .= '</ul></nav>';
 
         return $str;
     }

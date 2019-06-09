@@ -47,9 +47,9 @@ class TaskController extends BaseController
         return $this->render('/task/create.php');
     }
 
-    public function viewAction(Request $request)
+    public function viewAction(Request $request, $id)
     {
-        $id = $request->get('id');
+//        $id = $request->get('id');
 
         $model = (new Tasks())->getById($id);
 

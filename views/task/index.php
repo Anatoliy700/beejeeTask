@@ -9,7 +9,13 @@ use app\Services\Pagination;
 /* @var $pagination Pagination */
 
 $path = Registry::getRequest()->getPathInfo();
-$viewPath = Registry::getRoute('view');
+
+$getUrl = function ($view, $params) {
+    if ($view === '_self') {
+        $view = Registry::getRequest()->get('_route');
+    }
+    return Registry::getRoute($view, $params);
+};
 
 ?>
 
@@ -23,10 +29,10 @@ $viewPath = Registry::getRoute('view');
         <thead>
         <tr>
             <th>ID</th>
-            <th><a href="<?= $path ?>?sort=username">Username</a></th>
-            <th><a href="<?= $path ?>?sort=email">Email</a></th>
-            <th><a href="<?= $path ?>?sort=description">Description</a></th>
-            <th><a href="<?= $path ?>?sort=status">Status</a></th>
+            <th><a href="<?php echo $getUrl('_self', ['sort' => 'username']) ?>">Username</a></th>
+            <th><a href="<?php echo $getUrl('_self', ['sort' => 'email']) ?>">Email</a></th>
+            <th><a href="<?php echo $getUrl('_self', ['sort' => 'description']) ?>">Description</a></th>
+            <th><a href="<?php echo $getUrl('_self', ['sort' => 'status']) ?>">Status</a></th>
             <th>Link</th>
         </tr>
         </thead>
@@ -38,7 +44,7 @@ $viewPath = Registry::getRoute('view');
                 <td><?= $model->getEmail() ?></td>
                 <td><?= $model->getDescription() ?></td>
                 <td><?= $model->getStatus() ? 'Done' : 'In work' ?></td>
-                <td><a href="<?php echo $viewPath . '?id=' . $model->getId() ?>">View</a></td>
+                <td><a href="<?php echo $getUrl('view', ['id' => $model->getId()]) ?>">View</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

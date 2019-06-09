@@ -18,17 +18,17 @@ $routes->add(
 
 $routes->add(
     'view',
-    new Route('/task/view', ['_controller' => [TaskController::class, 'viewAction']])
+    new Route('/task/view/{id<\d+>}', ['_controller' => [TaskController::class, 'viewAction']])
 );
 
 $routes->add(
     'update',
-    new Route('/task/update', ['_controller' => [TaskController::class, 'updateAction']])
+    new Route('/task/update/{id<\d+>}', ['_controller' => [TaskController::class, 'updateAction']])
 );
 
 $routes->add(
     'updateStatus',
-    new Route('/task/update-status', ['_controller' => [TaskController::class, 'updateStatusAction']])
+    new Route('/task/update-status/{id<\d+>}', ['_controller' => [TaskController::class, 'updateStatusAction']])
 );
 
 $routes->add(

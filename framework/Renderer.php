@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Framework;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class Renderer
@@ -65,19 +64,5 @@ class Renderer
         extract($parameters);
         include_once $viewPath;
         return ob_get_clean();
-    }
-
-
-    /**
-     * Перенаправление на другую страницу
-     *
-     * @param string $name
-     *
-     * @return RedirectResponse
-     */
-    public function redirect(string $name, array $params = []): RedirectResponse
-    {
-        $route = Registry::getRoute($name, $params);
-        return new RedirectResponse($route);
     }
 }

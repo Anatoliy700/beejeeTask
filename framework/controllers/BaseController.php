@@ -5,6 +5,7 @@ namespace Framework\Controllers;
 
 use Framework\Registry;
 use Framework\Renderer;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class BaseController
@@ -28,7 +29,8 @@ abstract class BaseController
      */
     public function redirect(string $name, array $params = [])
     {
-        return (new Renderer())->redirect($name, $params);
+        $route = Registry::getRoute($name, $params);
+        return new RedirectResponse($route);
     }
 
     /**
