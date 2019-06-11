@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace app\controllers;
-
 
 use app\models\entity\Task;
 use app\models\repositories\Tasks;
@@ -20,7 +20,7 @@ class TaskController extends BaseController
         $repository = new Tasks();
         $models = $repository->getRange(
             Registry::getDataConfig('limitTasks'),
-            $request->get('offset') ?: 0,
+            (int)$request->get('offset') ?: 0,
             $request->get('sort') ? ['sort' => $request->get('sort')] : []
         );
         $pagination = new Pagination($request, $repository);
@@ -47,25 +47,21 @@ class TaskController extends BaseController
         return $this->render('/task/create.php');
     }
 
-    public function viewAction(Request $request, $id)
+    public function viewAction($id)
     {
-//        $id = $request->get('id');
-
-        $model = (new Tasks())->getById($id);
+        $model = (new Tasks())->getById((int)$id);
 
         return $this->render('/task/view.php', ['model' => $model]);
 
     }
 
-    public function updateAction(Request $request)
+    public function updateAction(Request $request, $id)
     {
         if (!$this->isLogged()){
             return $this->redirect('index');
         }
 
-        $id = $request->get('id');
-
-        $model = (new Tasks())->getById($id);
+        $model = (new Tasks())->getById((int)$id);
 
         if ($request->isMethod('POST')) {
             try {
@@ -81,15 +77,13 @@ class TaskController extends BaseController
         return $this->render('/task/update.php', ['model' => $model]);
     }
 
-    public function updateStatusAction(Request $request)
+    public function updateStatusAction(Request $request, $id)
     {
         if (!$this->isLogged()){
             return $this->redirect('index');
         }
 
-        $id = $request->get('id');
-
-        $model = (new Tasks())->getById($id);
+        $model = (new Tasks())->getById((int)$id);
 
         if ($request->isMethod('POST')) {
             try {

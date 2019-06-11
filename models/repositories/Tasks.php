@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace app\models\repositories;
-
 
 use app\models\entity\Task;
 use app\Services\Db;
@@ -65,7 +65,7 @@ class Tasks implements IRepository
 
         $sql = "SELECT * FROM {$this->tableName}";
 
-        if ($params['sort']) {
+        if (isset($params['sort'])) {
             $fieldSort = $params['sort'];
             $sql .= " ORDER BY {$fieldSort}";
         }
@@ -131,7 +131,7 @@ class Tasks implements IRepository
             $this->update($this->model, $prop);
         } else {
             if ($id = $this->insert($this->model)) {
-                $this->model->setId($id);
+                $this->model->setId((int)$id);
             }
         }
     }

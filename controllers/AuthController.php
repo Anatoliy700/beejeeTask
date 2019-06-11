@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace app\controllers;
-
 
 use app\services\Security;
 use Framework\Controllers\BaseController;

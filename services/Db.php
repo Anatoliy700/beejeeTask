@@ -1,7 +1,8 @@
 <?php
 
-namespace app\Services;
+declare(strict_types = 1);
 
+namespace app\Services;
 
 class Db
 {

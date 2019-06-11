@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace app\Services;
-
 
 use app\models\repositories\IRepository;
 use Framework\Registry;

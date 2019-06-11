@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace app\models\entity;
 
 class Task
@@ -38,7 +40,7 @@ class Task
      */
     public function getId(): ?int
     {
-        return $this->id;
+        return (int)$this->id;
     }
 
     /**
@@ -70,7 +72,7 @@ class Task
      */
     public function getStatus(): int
     {
-        return $this->status;
+        return (int)$this->status;
     }
 
     /**
@@ -79,7 +81,7 @@ class Task
      */
     public function setId(int $id): Task
     {
-        $this->id = $id;
+        $this->id = (int)$id;
 
         return $this;
     }

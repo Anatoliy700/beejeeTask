@@ -1,7 +1,8 @@
 <?php
 
-namespace Framework\Controllers;
+declare(strict_types = 1);
 
+namespace Framework\Controllers;
 
 use Framework\Registry;
 use Framework\Renderer;

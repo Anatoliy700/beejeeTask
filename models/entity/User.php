@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace app\models\entity;
-
 
 class User
 {
@@ -26,7 +26,7 @@ class User
      */
     public function getId(): int
     {
-        return $this->id;
+        return (int)$this->id;
     }
 
     /**
